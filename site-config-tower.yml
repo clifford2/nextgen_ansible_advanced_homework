@@ -1,16 +1,18 @@
+# Configure Tower project, inventories, job templates and workflow
+
 - hosts: localhost
   gather_facts: false 
   become: yes 
   vars:
-    opentlc_login: "{{ lookup('env','OPENTLC_ID') }}"
-    opentlc_password: "{{ lookup('env','OPENTLC_PASSWORD') }}"
-    param_repo_base: "{{ lookup('env','JQ_REPO_BASE') }}"
     tower_GUID: "{{ lookup('env','TOWER_GUID') }}"
     osp_GUID: "{{ lookup('env','OSP_GUID') }}"
     osp_DOMAIN: "{{ lookup('env','OSP_DOMAIN') }}"
-    EMAIL: "{{ lookup('env','MAIL_ID') }}"
+    opentlc_login: "{{ lookup('env','OPENTLC_ID') }}"
+    opentlc_password: "{{ lookup('env','OPENTLC_PASSWORD') }}"
     REGION_NAME: "{{ lookup('env','REGION') }}"
+    EMAIL: "{{ lookup('env','MAIL_ID') }}"
     github_repo: "{{ lookup('env','GITHUB_REPO') }}"
+    param_repo_base: "{{ lookup('env','JQ_REPO_BASE') }}"
     path_to_opentlc_key: ~/.ssh/openstack.pem
   roles:
     - config-tower

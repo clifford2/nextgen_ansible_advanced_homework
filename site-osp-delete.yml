@@ -1,3 +1,5 @@
+# Delete OSP instances
+
 - hosts: workstation
   become: yes
   roles:

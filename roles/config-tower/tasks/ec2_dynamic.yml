@@ -17,35 +17,22 @@
     - tag_AnsibleGroup_frontends
     - tag_AnsibleGroup_apps
     - tag_AnsibleGroup_appdbs
+    - bastions
+    - frontends
+    - apps 
+    - appdbs
 
-
-- name: Create groups needed to deploy app (parents)
-  tower_group:
-    name: "{{item}}"
-    inventory: "{{ec2_dynamic_inventory}}"
-    instance_filters: "tag_AnsibleGroup_{{item}}"
-    state: present
+- name: Associate AWS tags as children to smarter group names
+  command: |
+    tower-cli group associate --group "tag_AnsibleGroup_{{item}}" --parent "{{item}}" --inventory "{{ec2_dynamic_inventory}}"
   loop:
     - bastions
     - frontends
     - apps 
     - appdbs
 
-#- name: Associate AWS tags as children to bastions group
-#  command: |
-#    tower-cli group associate --group tag_AnsibleGroup_bastions --parent bastions --inventory "{{ec2_dynamic_inventory}}"
-
-#- name: Associate AWS tags as children to frontends group
-#  command: |
-#    tower-cli group associate --group tag_AnsibleGroup_frontends --parent frontends --inventory "{{ec2_dynamic_inventory}}"
-
-#- name: Associate AWS tags as children to apps group
-#  command: |
-#    tower-cli group associate --group tag_AnsibleGroup_apps --parent apps --inventory "{{ec2_dynamic_inventory}}"
-
-#- name: Associate AWS tags as children to appdbs group
-#  command: |
-#    tower-cli group associate --group tag_AnsibleGroup_appdbs --parent appdbs --inventory "{{ec2_dynamic_inventory}}"
+- name: Load password variables
+  include_vars: secrets.yml
 
 - name: Add localhost as host 
   tower_host:
@@ -54,8 +41,8 @@
     variables: "@/root/inventory_vars.json"
     state: present
     tower_host: tower1.{{tower_GUID}}.example.opentlc.com
-    tower_username: admin
-    tower_password: r3dh4t1!
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_password }}"
     tower_verify_ssl: no
 
 - name: Create inventory source with ec2 script

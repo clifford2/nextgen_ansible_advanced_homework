@@ -14,6 +14,9 @@
     scm_update_on_launch: True
     state: present
 
+- name: Load password variables
+  include_vars: secrets.yml
+
 - name: Machine Credentail to connect to workstation using openstack.pub
   tower_credential:
     name: Connect_to_workstation
@@ -21,8 +24,8 @@
     state: present
     kind: ssh
     tower_host: tower1.{{tower_GUID}}.example.opentlc.com
-    tower_username: admin
-    tower_password: r3dh4t1!
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_password }}"
     ssh_key_data: "{{ lookup('file', '/root/.ssh/openstack.pem') }}"
     username: cloud-user
 
@@ -40,8 +43,8 @@
     inventory: "{{static_inventory_name}}"
     state: present
     tower_host: tower1.{{tower_GUID}}.example.opentlc.com
-    tower_username: admin
-    tower_password: r3dh4t1!
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_password }}"
     tower_verify_ssl: no
 
 
@@ -65,8 +68,8 @@
     state: present
     kind: ssh
     tower_host: tower1.{{tower_GUID}}.example.opentlc.com
-    tower_username: admin
-    tower_password: r3dh4t1!
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_password }}"
     tower_verify_ssl: no
     ssh_key_data: "{{ lookup('file', '/root/.ssh/mykey.pem') }}"
     username: "{{ opentlc_login }}"

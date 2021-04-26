@@ -1,3 +1,4 @@
+# Setup OSP workstation & core resources, and install Tower isolated node
 
 - hosts: localhost
   vars:
@@ -18,7 +19,3 @@
     - osp-setup
 
 - import_playbook: site-install-isolated-node.yaml
-
-
-
-
