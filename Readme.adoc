@@ -12,7 +12,7 @@
 | app-tier | Install application server role
 | db-tier  | Install postgressql server for database role
 | lb-tier  | Install HA proxy role
-| base-config | Setup yum repo and base packages role
+| base-config | Setup yum repo and base packages role for 3 tier app nodes
 | setup-workstation | Setup workstation, create network, ssh keypair, security group etc. role 
 | osp-servers | Provision OSP Instances role
 | osp-instance-delete | Delete OSP Instances role

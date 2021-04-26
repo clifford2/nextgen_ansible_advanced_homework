@@ -1,3 +1,6 @@
+# Install Ansible Tower on isolated node
+# TODO: move tasks to role
+
 - hosts: localhost
   vars:
     OSP_GUID: "{{ lookup('env','OSP_GUID') }}"

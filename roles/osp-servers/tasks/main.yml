@@ -1,3 +1,37 @@
 ---
 
 # tasks file for osp.servers
+
+- name: Create server instances
+  os_server:
+    cloud:            "{{ openstack_cloud                           | default('openstack') }}"
+    name:             "{{ __openstack_server.value['name'] }}"
+    state:            "{{ openstack_server_state                    | default(__openstack_server.value['state']) | default('present') }}"
+    image:            "{{ __openstack_server.value['image']                  | default('rhel-7.6') }}"
+    flavor:           "{{ __openstack_server.value['flavor']                 | default('m2.medium') }}"
+    key_name:         "{{ __openstack_server.value['key_name']               | default('ansible_ssh_key') }}"
+    wait:             "yes"
+    security_groups:  "{{ __openstack_server.value['security_group'] }}"
+    delete_fip:       true
+    meta: "group={{ __openstack_server.value['meta'][0]['group'] }},deployment_name={{ __openstack_server.value['meta'][0]['deployment_name'] }}"
+    nics:
+      - net-name: int_network
+    userdata: |
+      #!/bin/bash
+      curl -o /tmp/openstack.pub http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
+      cat /tmp/openstack.pub >> /home/cloud-user/.ssh/authorized_keys
+  with_dict: "{{ osp_servers }}"      
+  loop_control:
+    loop_var: __openstack_server
+  async: 900
+  poll: 0
+  register: r_instances
+
+- name: Wait for async OSP instance creation to complete
+  async_status: "jid={{ item.ansible_job_id }}"
+  register: r_wait
+  until: r_wait.finished
+  retries: 900
+  loop: "{{ r_instances.results }}"
+
+...

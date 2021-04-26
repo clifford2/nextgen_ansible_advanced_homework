@@ -1,3 +1,7 @@
+# Check whether AWS instances are up or not
+# TODO:
+# - move tasks to role
+
 - hosts: all
   gather_facts: false
   tasks:

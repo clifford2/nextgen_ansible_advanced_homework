@@ -1,3 +1,7 @@
+- name: Verify that we have all required variables
+  fail: msg="The 'opentlc_login', 'opentlc_password' and/or 'param_repo_base' variables are not defined or empty"
+  when: (opentlc_login is not defined) or (opentlc_login|length == 0) or (opentlc_password is not defined) or (opentlc_password|length == 0) or (param_repo_base is not defined) or (param_repo_base|length == 0)
+
 - name: Generate var file for order_svc.sh script
   template:
     src: aws_jq_vars.yml
@@ -12,7 +16,6 @@
   copy:
     src: "{{path_to_opentlc_key}}"
     dest: /root/secret.pem
-
 
 - name: Copy inventory vars
   copy:

@@ -1,12 +1,14 @@
 ---
 # vars file for osp.servers
+# falvor size reduced to fit servers into available disk resources
+
 osp_servers:
   frontend:
     name: frontend
     state: present
     image: rhel-guest
     key_name: ansible_ssh
-    flavor: m1.medium
+    flavor: m1.small
     security_group: frontend
     meta:
       - { group: frontends, deployment_name: QA}
@@ -15,7 +17,7 @@ osp_servers:
     state: present
     image: rhel-guest
     key_name: ansible_ssh
-    flavor: m1.medium
+    flavor: m1.small
     security_group: apps
     meta:
       - { group: apps, deployment_name: QA}
@@ -24,7 +26,7 @@ osp_servers:
     state: present
     image: rhel-guest
     key_name: ansible_ssh
-    flavor: m1.medium
+    flavor: m1.small
     security_group: apps
     meta:
       - { group: apps, deployment_name: QA}
@@ -33,7 +35,7 @@ osp_servers:
     state: present
     image: rhel-guest
     key_name: ansible_ssh
-    flavor: m1.medium
+    flavor: m1.small
     security_group: db
     meta:
       - { group: appdbs, deployment_name: QA}

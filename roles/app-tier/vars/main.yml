@@ -1,2 +1,5 @@
 payload:          tomcat
 tomcat_web_root:  /usr/share/tomcat/webapps/ROOT
+tomcat_group:     tomcat
+tomcat_user:      tomcat
+tomcat_version:   10.0.5

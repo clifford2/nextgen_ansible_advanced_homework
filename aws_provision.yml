@@ -1,7 +1,17 @@
+# Provision AWS lab
+# Run with: source ~/labrc ; ansible-playbook aws_provision-xxx.yml --extra-vars "param_repo_base=$JQ_REPO_BASE param_user=$OPENTLC_ID param_password=$OPENTLC_PASSWORD"
+#
+# TODO:
+# - move tasks to role
+# - Handle parameters in Tower - see `roles/config-tower/templates/aws_jq_vars.yml`?
+
 ---
 - hosts: workstation
   become: true
   gather_facts: false
+  # TODO: review how to do this from Tower
+  #vars:
+  #  param_repo_base: "{{ lookup('env','JQ_REPO_BASE') }}"
   tasks:
     - name: create bin directory
       file:
@@ -14,7 +24,7 @@
         mode: 0755
 
     - name: get script jq
-      get_url: 
+      get_url:
         url: "{{ param_repo_base }}/scripts/jq-linux64"
         dest: /root/bin/jq
         mode: 0755
@@ -26,25 +36,29 @@
     - name: create credentials
       copy:
         content: |
-          export username={{ param_user }}
-          export password={{ param_password }}
+          export username='{{ param_user }}'
+          export password='{{ param_password }}'
           export uri=https://labs.opentlc.com
         dest: /root/credential.rc
         mode: 0755
 
     # Fix the existing shell scripts to reference jq command with bin/jq
     - name: fix scripts
-      shell: "sed -i 's/ jq/ bin\\/jq/g' {{ item }}"
+      #shell: "sed -i 's/ jq/ bin\\/jq/g' {{ item }}"
+      replace:
+        path: "{{ item }}"
+        regexp: ' jq'
+        replace: ' bin/jq'
       with_items:
         - /root/common.sh
         - /root/order_svc.sh
 
     # Using this script will always deploy environments in the us-east-1 region.
-    # TODO: this shell task is not working yet!
+    # TODO: this shell task is not working yet! (comment from original skeleton file - seems to work for me)
     - name: order service on opentlc
       shell: source /root/credential.rc; ./order_svc.sh -y -c 'OPENTLC Automation' -i 'Ansible Advanced - Three Tier App' -t 1 -d 'dialog_expiration=7;region=na;nodes=1;dialog_runtime=8;notes=Training - As part of course'
       args:
         chdir: /root
     - name: Wait for mail
       pause:
-        minutes: 10 
+        minutes: 10

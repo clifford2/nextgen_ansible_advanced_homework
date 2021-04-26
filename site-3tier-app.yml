@@ -1,10 +1,12 @@
-- hosts: workstation
+# Playbook to deploy 3-tier app on OCP
+
+- name: build in-memory inventory
+  hosts: workstation
   gather_facts: true
   roles:
   - name: osp-facts
 
 # Setup front-end load balancer tier
-
 
 - name: setup load-balancer tier
   hosts: frontends

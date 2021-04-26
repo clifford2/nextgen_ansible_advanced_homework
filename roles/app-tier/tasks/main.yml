@@ -1,2 +1,50 @@
 ---
+# Install & configure Apache Tomcat
 
+- name: Create tomcat group
+  group:
+    name: "{{ tomcat_group }}"
+    system: yes
+    state: present
+
+- name: Create tomcat user
+  user:
+    name: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    state: present
+
+- name: Install Java
+  yum:
+    name: java-11-openjdk
+    state: present
+
+- name: Download Tomcat
+  get_url:
+    url: "https://downloads.apache.org/tomcat/tomcat-10/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz"
+    dest: /tmp/tomcat.tgz
+
+- name: Unarchive Tomcat
+  unarchive:
+    src: /tmp/tomcat.tgz
+    dest: /opt
+    remote_src: yes
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+
+- name: Create index.html
+  template:
+    src: index.html.j2
+    dest: "/opt/apache-tomcat-{{tomcat_version}}/webapps/ROOT/index.html"
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    mode: "0644"
+
+- name: Generate Tomcat systemd unit file
+  template:
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    src: tomcat.service.j2
+    dest: "/etc/systemd/system/tomcat.service"
+    mode: "0644"
+  register: systemd_service_file
+  notify: start {{ payload }}

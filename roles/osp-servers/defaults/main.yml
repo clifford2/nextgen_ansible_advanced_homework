@@ -1,2 +1,27 @@
 ---
 # defaults file for osp.servers
+
+instance_details:
+- instance_name: app1
+  group: apps
+  deployment: dev
+  security_group_name: app_servers
+  flavor: m2.small
+
+- instance_name: app2
+  group: apps
+  deployment: dev
+  security_group_name: app_servers
+  flavor: m2.small
+
+- instance_name: db
+  group: appdbs
+  deployment: dev
+  security_group_name: db_servers
+  flavor: m2.small
+
+- instance_name: frontend
+  group: frontends
+  deployment: dev
+  security_group_name: frontend_servers 
+  flavor: m2.small

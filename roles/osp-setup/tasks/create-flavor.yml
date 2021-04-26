@@ -6,3 +6,12 @@
      ram: 2048
      vcpus: 1
      disk: 20
+
+- name: Create m1.small flavor
+  os_nova_flavor:
+     cloud: openstack
+     state: present
+     name: m1.small
+     ram: 2048
+     vcpus: 1
+     disk: 10
