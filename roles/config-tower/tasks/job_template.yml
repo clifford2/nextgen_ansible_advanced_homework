@@ -85,7 +85,7 @@
     project: "{{proj_name}}"
     playbook: "{{aws_ssh_playbook}}"
     credential: "{{opentlc_cred_name}}"
-    extra_vars_path: "@/tmp/tower_info.yml"
+    extra_vars_path: "/tmp/tower_info.yml"
     state: "present"
 
 - name: Job template for checking AWS instances status

@@ -1,3 +1,5 @@
+# Smoke test for Prod 3 tier app in AWS
+
 - hosts: frontends
   gather_facts: false
   tasks:
