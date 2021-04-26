@@ -9,7 +9,7 @@
 
 - name: Generate var file for tower module
   template:
-    src: tower_info.yml
+    src: tower_info.yml.j2
     dest: /tmp/tower_info.yml
 
 - name: Copy opentlc ssh keys

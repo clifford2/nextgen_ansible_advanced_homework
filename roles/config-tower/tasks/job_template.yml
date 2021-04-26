@@ -21,8 +21,7 @@
     organization: "{{org_name}}"
     state: present
     kind: vault
-    username: "vault_password"
-    password: "ansible"
+    vault_password: "ansible"
 
 - name: Job template for 3tier app deploy on QA Env
   tower_job_template:
