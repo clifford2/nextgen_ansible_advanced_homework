@@ -9,6 +9,8 @@
     organization: "{{org_name}}"
     scm_type: git
     scm_url: "{{github_repo}}"
+    scm_branch: "homework"
+# TODO: change branch name
     scm_update_on_launch: True
     state: present
 
