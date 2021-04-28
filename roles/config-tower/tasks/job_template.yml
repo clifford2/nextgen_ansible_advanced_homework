@@ -75,6 +75,7 @@
     project: "{{proj_name}}"
     playbook: "{{aws_provision_playbook}}"
     credential: "{{ssh_cred_name}}"
+    extra_vars_path: /tmp/aws_jq_vars.yml
     state: "present"
 
 - name: Job template for injecting AWS SSH keys
