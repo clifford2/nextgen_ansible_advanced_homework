@@ -35,7 +35,7 @@
   tower_host:
     name: "localhost"
     inventory: "{{ec2_dynamic_inventory}}"
-    variables: "@/root/inventory_vars.json"
+    variables: "@/tmp/inventory_vars.json"
     state: present
     tower_host: tower1.{{tower_GUID}}.example.opentlc.com
     tower_username: "{{ tower_user }}"

@@ -3,23 +3,23 @@
 
 - name: create bin directory
   file:
-    path: /root/bin
+    path: ~/bin
     state: directory
 - name: get script common.sh
   get_url:
     url: "{{ param_repo_base }}/scripts/common.sh"
-    dest: /root/common.sh
+    dest: ~/common.sh
     mode: 0755
 
 - name: get script jq
   get_url:
     url: "{{ param_repo_base }}/scripts/jq-linux64"
-    dest: /root/bin/jq
+    dest: ~/bin/jq
     mode: 0755
 - name: get script order_svc.sh
   get_url:
     url: "{{ param_repo_base }}/scripts/order_svc.sh"
-    dest: /root/order_svc.sh
+    dest: ~/order_svc.sh
     mode: 0755
 - name: create credentials
   copy:
@@ -27,7 +27,7 @@
       export username='{{ param_user }}'
       export password='{{ param_password }}'
       export uri=https://labs.opentlc.com
-    dest: /root/credential.rc
+    dest: ~/credential.rc
     mode: 0755
 
 # Fix the existing shell scripts to reference jq command with bin/jq
@@ -38,14 +38,14 @@
     regexp: ' jq'
     replace: ' bin/jq'
   with_items:
-    - /root/common.sh
-    - /root/order_svc.sh
+    - ~/common.sh
+    - ~/order_svc.sh
 
 # Using this script will always deploy environments in the us-east-1 region.
 - name: order service on opentlc
-  shell: source /root/credential.rc; ./order_svc.sh -y -c 'OPENTLC Automation' -i 'Ansible Advanced - Three Tier App' -t 1 -d 'dialog_expiration=7;region=na;nodes=1;dialog_runtime=8;notes=Training - As part of course'
+  shell: source ~/credential.rc; ./order_svc.sh -y -c 'OPENTLC Automation' -i 'Ansible Advanced - Three Tier App' -t 1 -d 'dialog_expiration=7;region=na;nodes=1;dialog_runtime=8;notes=Training - As part of course'
   args:
-    chdir: /root
+    chdir: ~
 - name: Wait for mail
   pause:
     minutes: 10

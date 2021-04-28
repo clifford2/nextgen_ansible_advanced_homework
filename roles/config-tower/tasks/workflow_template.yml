@@ -2,11 +2,11 @@
 - name: Create workflow schema 
   template:
     src: workflow.j2
-    dest: /root/workflow.yml
+    dest: /tmp/workflow.yml
 
 - name: Create CI CD Workflow
   # tower-cli workflow create -n {{workflow_template_name}} --organization {{org_name}}
   tower_workflow_template:
     name: "{{workflow_template_name}}"
     organization: "{{org_name}}"
-    schema: "{{ lookup('file', '/root/workflow.yml') }}"
+    schema: "{{ lookup('file', '/tmp/workflow.yml') }}"
