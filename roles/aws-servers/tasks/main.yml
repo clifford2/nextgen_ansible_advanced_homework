@@ -36,7 +36,7 @@
   replace:
     path: "{{ item }}"
     regexp: ' jq'
-    replace: ' bin/jq'
+    replace: ' ~/bin/jq'
   with_items:
     - ~/common.sh
     - ~/order_svc.sh
