@@ -3,6 +3,8 @@
 - hosts: localhost
   gather_facts: false 
   become: yes 
+  vars_files:
+    - vars/secrets.yml
   vars:
     tower_GUID: "{{ lookup('env','TOWER_GUID') }}"
     osp_GUID: "{{ lookup('env','OSP_GUID') }}"
