@@ -1,0 +1,62 @@
+---
+# Fetch GUIDkey.pem from bastion of Three tier application env and create machine credential to connect to AWS instances
+
+- name: Install required packages 
+  yum: 
+   name: "{{item}}"
+   state: latest 
+  loop: 
+    - python 
+    - python-pip 
+    - python-devel 
+    - gcc
+- name: Install tower-cli
+  pip:
+   name: ansible-tower-cli
+   state: latest
+- name: List key files
+  find:
+    paths: "/root/.ssh"
+    patterns: "*key.pem"
+    recurse: False
+  register: keyfiles
+- name: Slurp key file
+  slurp:
+    src: "{{ keyfiles.files[0].path }}"
+  register: keydata
+- name: Tower Creds key file
+  tower_credential:
+    name: Creds for AWS instances
+    organization: Default
+    state: present
+    kind: ssh
+    tower_host: tower1.{{tower_guid}}.example.opentlc.com
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_password }}"
+    tower_verify_ssl: no
+    ssh_key_data: "{{ keydata['content'] | b64decode }}"
+    username: ec2-user
+- name: Update Prod Job template
+  tower_job_template:
+    name: "09_3 tier app on Prod"
+    credential: "Creds for AWS instances"
+    tower_host: tower1.{{tower_guid}}.example.opentlc.com
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_password }}"
+    tower_verify_ssl: no
+    state: present
+    job_type: run
+    playbook: site-3tier-app.yml
+    project: "00_Homework Assignment"
+- name: Update Prod Smoke Job template
+  tower_job_template:
+    name: "10_Smoke test Prod env"
+    credential: "Creds for AWS instances"
+    tower_host: tower1.{{tower_guid}}.example.opentlc.com
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_password }}"
+    tower_verify_ssl: no
+    state: present
+    job_type: run
+    playbook: site-smoketest-aws.yml
+    project: "00_Homework Assignment"

@@ -1,0 +1,22 @@
+---
+# Install Ansible Tower on isolated node
+
+- name: Verify that we have all required variables
+  fail: msg="The 'OSP_GUID', 'OSP_DOMAIN' and/or 'OPENTLC_ID' variables are not defined or empty"
+  when: (OSP_GUID is not defined) or (OSP_GUID|length == 0) or (OSP_DOMAIN is not defined) or (OSP_DOMAIN|length == 0) or (OPENTLC_ID is not defined) or (OPENTLC_ID|length == 0)
+
+- name: Append inventory file
+  blockinfile:
+    path: /root/ansible-tower-setup-latest/inventory
+    block: |
+      [isolated_group_osp]
+      workstation-{{OSP_GUID}}.{{OSP_DOMAIN}} ansible_user='cloud-user' ansible_ssh_private_key_file='~/.ssh/openstack.pem' ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+      [isolated_group_osp:vars]
+      controller=tower
+    state: present
+
+- name: Run Ansible Tower setup
+  shell: /root/ansible-tower-setup-latest/setup.sh
+  async: 3600
+  poll: 36
+

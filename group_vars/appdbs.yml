@@ -1,0 +1,21 @@
+---
+postgres_packages:
+  - postgresql 
+  - postgresql-server 
+  - postgresql-contrib 
+  - postgresql-libs
+postgres_library: python-psycopg2
+postgres_data_dir: /var/lib/pgsql/data
+postgres_bin_path: /usr/bin
+postgres_service: postgresql.service
+postgres_port: 5432
+postgres_user: postgres
+postgres_users:
+  - name: tomcat
+    password: redhat
+    database: tomcat_db
+    state: present
+    priv: ALL
+postgres_databases:
+  - name: tomcat_db
+    owner: tomcat

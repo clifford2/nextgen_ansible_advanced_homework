@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+Environment=JRE_HOME=/etc/alternatives/jre
+Environment=CATALINA_HOME=/opt/apache-tomcat-{{tomcat_version}}
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+ExecStart=/opt/apache-tomcat-{{tomcat_version}}/bin/startup.sh
+ExecStop=/opt/apache-tomcat-{{tomcat_version}}/bin/shutdown.sh
+
+User={{ tomcat_user }}
+Group={{ tomcat_group }}
+
+[Install]
+WantedBy=multi-user.target
