@@ -14,6 +14,6 @@
     dest: /etc/yum.repos.d/internal.repo
     mode: 0644
  
-- name: install base tools and packages
-  debug:
-    msg: "TODO what tools/packages do we need?"
+#- name: install base tools and packages
+#  debug:
+#    msg: "TODO what tools/packages do we need?"
