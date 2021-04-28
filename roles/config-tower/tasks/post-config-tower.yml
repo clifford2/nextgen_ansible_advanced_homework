@@ -13,9 +13,6 @@
     scm_update_on_launch: True
     state: present
 
-- name: Load password variables
-  include_vars: secrets.yml
-
 - name: Machine Credentail to connect to workstation using openstack.pub
   tower_credential:
     name: Connect_to_workstation

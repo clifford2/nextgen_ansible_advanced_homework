@@ -40,7 +40,8 @@ To deploy this, please follow these steps.
 - In the web UI, verify that the `osp` instance group was created
 - In the web UI, change the `admin` password to `r3dh4t1!`
 - Back on the `control` host, also change the password in `~/.tower_cli.cfg`
-- Create the Tower project, job templates & workflow template by running: `ansible-playbook site-config-tower.yml -e tower_GUID=${TOWER_GUID} -e osp_GUID=${OSP_GUID} -e osp_DOMAIN=${OSP_DOMAIN} -e opentlc_login=${OPENTLC_ID} -e path_to_opentlc_key=/root/.ssh/mykey.pem -e param_repo_base=${JQ_REPO_BASE} -e opentlc_password=${OPENTLC_PASSWORD} -e REGION_NAME=${REGION} -e EMAIL=${MAIL_ID} -e github_repo=${GITHUB_REPO}`
+- Create the Tower project, job templates & workflow template by running the following command (vault password is `ansible`):
+	- `ansible-playbook site-config-tower.yml -e tower_GUID=${TOWER_GUID} -e osp_GUID=${OSP_GUID} -e osp_DOMAIN=${OSP_DOMAIN} -e opentlc_login=${OPENTLC_ID} -e path_to_opentlc_key=/root/.ssh/mykey.pem -e param_repo_base=${JQ_REPO_BASE} -e opentlc_password=${OPENTLC_PASSWORD} -e REGION_NAME=${REGION} -e EMAIL=${MAIL_ID} -e github_repo=${GITHUB_REPO} --ask-vault-pass`
 
 ### Deploy the application
 

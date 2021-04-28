@@ -31,9 +31,6 @@
     - apps 
     - appdbs
 
-- name: Load password variables
-  include_vars: secrets.yml
-
 - name: Add localhost as host 
   tower_host:
     name: "localhost"
