@@ -1,14 +1,26 @@
-- name: Setup SSH keys for cloud-user
+# Setup workstation with SSH keypair & required software
+
+- name: Setup SSH authorized key for cloud-user
   authorized_key:
      user: cloud-user
      state: present
      key: http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
+
+- name: Setup SSH private key for accessing OCP instances
+  get_url:
+     url: http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pem
+     dest: /root/.ssh/openstack.pem
+     owner: root
+     group: root
+     mode: '0400'
+
 - name: Install required packages 
   yum: 
      name:
        - python3
        - git
      state: latest 
+
 - name: Install openstack library
   #command: pip3 install ansible==2.9.7 openstacksdk==0.12.0  cryptography==3.0
   pip:
@@ -17,6 +29,7 @@
       - openstacksdk==0.12.0
       - cryptography==3.0
     state: present
+
 - name: Create clouds.yaml file
   blockinfile:
     create: yes

@@ -17,7 +17,7 @@
 
 - name: Create vault credential
   tower_credential:
-    name: "yum-repo-cred"
+    name: "vault-cred"
     organization: "{{org_name}}"
     state: present
     kind: vault
@@ -30,7 +30,7 @@
     inventory: "{{static_inventory_name}}"
     project: "{{proj_name}}"
     playbook: "{{app_deploy_playbook}}"
-    credential: "yum-repo-cred"
+    credential: "{{ssh_cred_name}}"
     state: "present"
 
 - name: Associate IG to 3tier job template  
@@ -89,6 +89,10 @@
     extra_vars_path: "/tmp/tower_info.yml"
     state: "present"
 
+- name: Associate vault credential with AWS SSH keys job template
+  command: |
+    tower-cli job_template associate_credential --job-template "{{job_template_aws_ssh_keys}}" --credential "vault-cred"
+
 - name: Job template for checking AWS instances status
   tower_job_template:
     name: "{{job_template_aws_status_check}}"
@@ -106,7 +110,7 @@
     inventory: "{{ec2_dynamic_inventory}}"
     project: "{{proj_name}}"
     playbook: "{{app_deploy_playbook}}"
-    credential: "yum-repo-cred"
+    credential: "vault-cred"
     state: "present"
 
 - name: Job template for smoke test aws instances
@@ -116,5 +120,5 @@
     inventory: "{{ec2_dynamic_inventory}}"
     project: "{{proj_name}}"
     playbook: "{{aws_smoke_app_playbook}}"
-    credential: "yum-repo-cred"
+    credential: "vault-cred"
     state: "present"

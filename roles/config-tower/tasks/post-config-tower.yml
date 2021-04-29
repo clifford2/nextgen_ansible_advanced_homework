@@ -22,7 +22,7 @@
     tower_host: tower1.{{tower_GUID}}.example.opentlc.com
     tower_username: "{{ tower_user }}"
     tower_password: "{{ tower_password }}"
-    ssh_key_data: "{{ lookup('file', '~/.ssh/openstack.pem') }}"
+    ssh_key_data: "{{ lookup('file', '/root/.ssh/openstack.pem') }}"
     username: cloud-user
 
 - name: Create Inventory
@@ -44,17 +44,16 @@
     tower_verify_ssl: no
 
 
-- name: Create Group in static inventory 
+- name: Create Group in static inventory
   tower_group:
     name: "{{group_name}}"
     inventory: "{{static_inventory_name}}"
     state: present
-    instance_filters: "{{host_name}}"
 
 
-#- name: Associate workstation host to group 
-#  command: | 
-#    tower-cli host associate --host "{{host_name}}" --group "{{group_name}}"
+- name: Associate workstation host to group
+  command: |
+    tower-cli host associate --host "{{host_name}}" --group "{{group_name}}"
 
 
 - name: Tower Creds key file

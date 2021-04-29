@@ -4,6 +4,7 @@
      dest: /tmp/rhel.qcow2
   tags:
       - tested
+
 - name: Create openstack image
   os_image:
      cloud: openstack

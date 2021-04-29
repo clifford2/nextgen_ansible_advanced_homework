@@ -15,6 +15,6 @@
     EMAIL: "{{ lookup('env','MAIL_ID') }}"
     github_repo: "{{ lookup('env','GITHUB_REPO') }}"
     param_repo_base: "{{ lookup('env','JQ_REPO_BASE') }}"
-    path_to_opentlc_key: ~/.ssh/openstack.pem
+    path_to_opentlc_key: "/root/.ssh/openstack.pem"
   roles:
     - config-tower

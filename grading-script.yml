@@ -9,7 +9,7 @@
     add_host: 
       name: workstation-{{ OSP_GUID }}.{{ OSP_DOMAIN }}
       group: workstation
-      ansible_ssh_private_key_file: ~/.ssh/openstack.pem
+      ansible_ssh_private_key_file: "/root/.ssh/openstack.pem"
       ansible_ssh_user: cloud-user
  
 - hosts: workstation
@@ -25,15 +25,24 @@
     debug: "{{ openstack_info.openstack_servers | length }}"
     register: osp_instance
 
-  - debug: var=osp_instance
+#  - name: Display OSP instance data
+#    debug:
+#      var: osp_instance
 
 
-  - name: Access website
+  - name: Display frontend IP
+    debug:
+      msg: "URL = http://{{ item.public_v4 }}"
+    when: 'item.name == "frontend"'
+    loop: "{{ openstack_info.openstack_servers }}"
+
+
+  - name: Access QA website
     uri:
       url: "http://{{ item.public_v4 }}"
       status_code: 200
       return_content: yes
-      when: 'item.name == "frontend"'
+    when: 'item.name == "frontend"'
     loop: "{{ openstack_info.openstack_servers }}"
     register: qa_webpage
     ignore_errors: yes
@@ -48,7 +57,7 @@
     ANSIBLE_ADVANCE_GUID: "{{ lookup('env','THREE_TIER_GUID') }}"
   gather_facts: false
   tasks:
-  - name: Access website
+  - name: Access PROD website
     uri:
       url: "http://frontend1.{{ ANSIBLE_ADVANCE_GUID }}.example.opentlc.com"
       status_code: 200
