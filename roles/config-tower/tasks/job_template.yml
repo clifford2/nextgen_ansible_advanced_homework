@@ -35,7 +35,7 @@
 
 - name: Associate vault credential with OSP 3tier job template
   command: |
-    tower-cli job_template associate_credential --job-template "{{job_template_name_2tier_app}}" --credential "vault-cred"
+    tower-cli job_template associate_credential --job-template "{{job_template_name_3tier_app}}" --credential "vault-cred"
 
 - name: Associate IG to 3tier job template  
   command: |
