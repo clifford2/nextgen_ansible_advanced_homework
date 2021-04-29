@@ -1,4 +1,4 @@
-# Smoke test for QA 3 tier app in OCP environment
+# Smoke test for QA 3 tier app in OSP environment
 # To be executed from Tower isolated node (workstation)
 
 - hosts: localhost

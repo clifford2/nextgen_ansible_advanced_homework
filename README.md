@@ -25,7 +25,7 @@ To deploy this, please follow these steps.
 - Fork this git repo: `git clone https://github.com/clifford2/nextgen_ansible_advanced_homework.git && cd nextgen_ansible_advanced_homework`
 - Copy the `labrc` file from the cloned repo to your home directory, and edit it to fill in the required *sensitive* information
 - Set the environment variables from this file: `source ~/labrc`
-- Provision the OCP network, flavor, security groups, and SSH keys, and set up the OCP `workstation` host as an Tower isolated node, by running the following (supplying the OSP workstation password from email when prompted):
+- Provision the OSP network, flavor, security groups, and SSH keys, and set up the OSP `workstation` host as an Tower isolated node, by running the following (supplying the OSP workstation password from email when prompted):
 	```
 	mv ~/ansible-tower-setup-*/ ~/ansible-tower-setup-latest
 	cp /etc/ansible/hosts ~/ansible-tower-setup-latest/inventory

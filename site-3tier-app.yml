@@ -1,4 +1,4 @@
-# Playbook to deploy 3-tier app on OCP
+# Playbook to deploy 3-tier app on OSP
 
 - name: build in-memory inventory
   hosts: workstation

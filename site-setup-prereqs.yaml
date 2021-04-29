@@ -1,6 +1,8 @@
 # Setup OSP workstation & core resources, and install Tower isolated node
 
 - hosts: localhost
+  vars_files:
+    - vars/secrets.yml
   vars:
     OSP_GUID: "{{ lookup('env','OSP_GUID') }}"
     OSP_DOMAIN: "{{ lookup('env','OSP_DOMAIN') }}"

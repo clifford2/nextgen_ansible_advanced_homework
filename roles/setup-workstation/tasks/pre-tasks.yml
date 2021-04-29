@@ -6,7 +6,7 @@
      state: present
      key: http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
 
-- name: Setup SSH private key for accessing OCP instances
+- name: Setup SSH private key for accessing OSP instances
   get_url:
      url: http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pem
      dest: /root/.ssh/openstack.pem
@@ -39,8 +39,8 @@
         openstack:
           auth:
             auth_url: http://192.0.2.21:5000
-            username: "admin"
-            password: "r3dh4t1!"
+            username: "{{ tower_user }}"
+            password: "{{ tower_password }}"
             project_id: 4e07f423a12f437388a97a533bb9eef9
             project_name: "admin"
             user_domain_name: "Default"
