@@ -11,7 +11,7 @@
 
 - name: Check if Postgres initialized
   stat:
-    path: "{{ postgres0_data_dir }}/PG_VERSION"
+    path: "{{ postgres_data_dir }}/PG_VERSION"
   register: r_postgres_init_dir_state
 
 - when: not r_postgres_init_dir_state.stat.exists

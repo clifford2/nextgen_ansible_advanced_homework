@@ -21,7 +21,7 @@ To deploy this, please follow these steps.
 - Once provisioned, connect to the **Homework** lab's `control` host:
 	- `ssh <user-id>@control.<guid>.example.opentlc.com`
 - Switch to root: `sudo -i`
-- Copy your OPENTLC private key to `/root/.ssh/mykey.pem`, and set permissions to 0400.
+- Copy your OPENTLC private key (for the public key in [account.opentlc.com](https://account.opentlc.com/account/)) to `/root/.ssh/mykey.pem`, and set permissions to 0400.
 - Fork this git repo: `git clone https://github.com/clifford2/nextgen_ansible_advanced_homework.git && cd nextgen_ansible_advanced_homework`
 - Copy the `labrc` file from the cloned repo to your home directory, and edit it to fill in the required *sensitive* information
 - Set the environment variables from this file: `source ~/labrc`
@@ -41,7 +41,7 @@ To deploy this, please follow these steps.
 - In the web UI, change the `admin` password to `r3dh4t1!`
 - Back on the `control` host, also change the password in `~/.tower_cli.cfg`
 - Create the Tower project, job templates & workflow template by running the following command (vault password is `ansible`):
-	- `ansible-playbook site-config-tower.yml -e tower_GUID=${TOWER_GUID} -e osp_GUID=${OSP_GUID} -e osp_DOMAIN=${OSP_DOMAIN} -e opentlc_login=${OPENTLC_ID} -e path_to_opentlc_key=/root/.ssh/mykey.pem -e param_repo_base=${JQ_REPO_BASE} -e opentlc_password=${OPENTLC_PASSWORD} -e REGION_NAME=${REGION} -e EMAIL=${MAIL_ID} -e github_repo=${GITHUB_REPO} --ask-vault-pass`
+	- `ansible-playbook site-config-tower.yml -e tower_GUID=${TOWER_GUID} -e osp_GUID=${OSP_GUID} -e osp_DOMAIN=${OSP_DOMAIN} -e opentlc_login=${OPENTLC_ID} -e path_to_opentlc_key=/root/.ssh/mykey.pem -e param_repo_base=${JQ_REPO_BASE} -e opentlc_password="${OPENTLC_PASSWORD}" -e REGION_NAME=${REGION} -e EMAIL=${MAIL_ID} -e github_repo=${GITHUB_REPO} --ask-vault-pass`
 
 ### Deploy the application
 

@@ -15,7 +15,7 @@
 
 - name: Machine Credentail to connect to workstation using openstack.pub
   tower_credential:
-    name: Connect_to_workstation
+    name: "{{ssh_cred_name}}"
     organization: Default
     state: present
     kind: ssh
@@ -70,7 +70,7 @@
     ssh_key_data: "{{ lookup('file', '/root/.ssh/mykey.pem') }}"
     username: "{{ opentlc_login }}"
 
-- name: Remove secret
-  file:
-    name: /root/secret.pem
-    state: absent
+#- name: Remove secret
+#  file:
+#    name: /tmp/secret.pem
+#    state: absent

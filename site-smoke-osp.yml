@@ -1,7 +1,7 @@
 # Smoke test for QA 3 tier app in OCP environment
 # To be executed from Tower isolated node (workstation)
 
-- hosts: workstation
+- hosts: localhost
   gather_facts: false
   tasks:
 

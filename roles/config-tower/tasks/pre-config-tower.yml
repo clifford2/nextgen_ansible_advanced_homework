@@ -12,10 +12,10 @@
     src: tower_info.yml.j2
     dest: /tmp/tower_info.yml
 
-- name: Copy opentlc ssh keys
-  copy:
-    src: "{{path_to_opentlc_key}}"
-    dest: /root/secret.pem
+#- name: Copy opentlc ssh keys
+#  copy:
+#    src: "{{path_to_opentlc_key}}"
+#    dest: /tmp/secret.pem
 
 - name: Copy inventory vars
   copy:
