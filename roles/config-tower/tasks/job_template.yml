@@ -33,6 +33,10 @@
     credential: "{{ssh_cred_name}}"
     state: "present"
 
+- name: Associate vault credential with OSP 3tier job template
+  command: |
+    tower-cli job_template associate_credential --job-template "{{job_template_name_2tier_app}}" --credential "vault-cred"
+
 - name: Associate IG to 3tier job template  
   command: |
     tower-cli job_template associate_ig --job-template "{{job_template_name_3tier_app}}" --instance-group "{{instance_group_name}}"

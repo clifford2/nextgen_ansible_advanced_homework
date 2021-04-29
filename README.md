@@ -25,12 +25,12 @@ To deploy this, please follow these steps.
 - Fork this git repo: `git clone https://github.com/clifford2/nextgen_ansible_advanced_homework.git && cd nextgen_ansible_advanced_homework`
 - Copy the `labrc` file from the cloned repo to your home directory, and edit it to fill in the required *sensitive* information
 - Set the environment variables from this file: `source ~/labrc`
-- Provision the OSP network, flavor, security groups, and SSH keys, and set up the OSP `workstation` host as an Tower isolated node, by running the following (supplying the OSP workstation password from email when prompted):
+- Provision the OSP network, flavor, security groups, and SSH keys, and set up the OSP `workstation` host as an Tower isolated node, by running the following (supplying the OSP workstation password from email when prompted, and the vault password `ansible`):
 	```
 	mv ~/ansible-tower-setup-*/ ~/ansible-tower-setup-latest
 	cp /etc/ansible/hosts ~/ansible-tower-setup-latest/inventory
 	chmod 0400 /root/.ssh/openstack.pem
-	ansible-playbook site-setup-prereqs.yaml -k
+	ansible-playbook site-setup-prereqs.yaml --ask-vault-pass -k
 	```
 - Verify a successful connection between the `control` and `workstation` hosts:
 	```
