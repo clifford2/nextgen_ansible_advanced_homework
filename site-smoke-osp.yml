@@ -9,7 +9,8 @@
     os_server_info:
       cloud: "{{ openstack_cloud | default('openstack') }}"
       filters:
-        metadata.group: frontends
+        metadata:
+          group: frontends
     register: r_os_servers
 
   - name: List website URL(s)
@@ -27,7 +28,7 @@
 
   - name: Display curl result
     debug:
-      msg: "{{ qa_webpage }}"
+      msg: "{{ qa_webpage.results[0].content }}"
 
   - name: Fail if 'Ansible has done its job' is not in the page content
     fail:
