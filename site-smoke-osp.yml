@@ -12,15 +12,25 @@
         metadata.group: frontends
     register: r_os_servers
 
+  - name: List website URL(s)
+    debug:
+      msg: "http://{{ item.public_v4 }}"
+    loop: "{{ r_os_servers.openstack_servers }}"
+
   - name: Curl website
     uri:
       url: "http://{{ item.public_v4 }}"
       return_content: yes
       status_code: 200
     loop: "{{ r_os_servers.openstack_servers }}"
+    register: qa_webpage
+
+  - name: Display curl result
+    debug:
+      msg: "{{ qa_webpage }}"
 
   - name: Fail if 'Ansible has done its job' is not in the page content
     fail:
-    when: "'Ansible has done its job' not in webpage.results[0].content"
+    when: "'Ansible has done its job' not in qa_webpage.results[0].content"
     tags:
       - osp.smoke
