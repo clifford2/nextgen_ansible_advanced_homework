@@ -46,7 +46,7 @@ To deploy this, please follow these steps.
 ### Deploy the application
 
 The ` cicd_workflow` template should now exist in Tower, and can be launched from there.
-
+When prompted, please provide the SSH password for the AWS bastion host (from the email you received from OPENTLC).
 
 ## List of Playbooks
 
