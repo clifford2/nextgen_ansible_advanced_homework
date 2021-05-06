@@ -59,6 +59,7 @@
 - name: Tower Creds key file
   tower_credential:
     name: "{{ opentlc_cred_name }}"
+    description: "Credentials for logging in to PROD AWS server as OPENTLC user ({{ opentlc_login }})"
     organization: Default
     state: present
     kind: ssh
@@ -68,6 +69,7 @@
     tower_verify_ssl: no
     ssh_key_data: "{{ lookup('file', '/root/.ssh/mykey.pem') }}"
     username: "{{ opentlc_login }}"
+    password: "ASK"
 
 #- name: Remove secret
 #  file:
