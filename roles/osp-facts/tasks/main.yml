@@ -6,7 +6,7 @@
     cloud: openstack
   register: result
 
-- name: inspect os_server_info
+- name: Inspect os_server_info
   debug:
     var: item
   with_items: "{{result.openstack_servers}}"

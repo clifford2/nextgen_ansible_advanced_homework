@@ -16,6 +16,8 @@
 
 - hosts: workstation
   become: yes
+  vars_files:
+    - vars/secrets.yml
   roles:
     - setup-workstation
     - osp-setup

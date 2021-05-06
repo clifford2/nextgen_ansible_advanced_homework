@@ -12,6 +12,8 @@
     key_name:         "{{ __openstack_server.value['key_name']               | default('ansible_ssh_key') }}"
     wait:             "yes"
     security_groups:  "{{ __openstack_server.value['security_group'] }}"
+    auto_ip:          true
+    reuse_ips:        false
     delete_fip:       true
     meta: "group={{ __openstack_server.value['meta'][0]['group'] }},deployment_name={{ __openstack_server.value['meta'][0]['deployment_name'] }}"
     nics:

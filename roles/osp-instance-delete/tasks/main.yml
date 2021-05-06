@@ -10,4 +10,5 @@
     cloud: "{{ openstack_cloud | default('openstack') }}"
     name: "{{ item.name }}"
     state: absent
+    delete_fip: true
   loop: "{{ r_os_servers.openstack_servers }}"

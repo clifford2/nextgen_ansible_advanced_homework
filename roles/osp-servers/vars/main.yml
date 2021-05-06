@@ -1,6 +1,6 @@
 ---
 # vars file for osp.servers
-# falvor size reduced to fit servers into available disk resources
+# flavor size reduced to fit servers into available disk resources
 
 osp_servers:
   frontend:
