@@ -69,7 +69,7 @@
     tower_verify_ssl: no
     ssh_key_data: "{{ lookup('file', '/root/.ssh/mykey.pem') }}"
     username: "{{ opentlc_login }}"
-    password: "ASK"
+    #password: "ASK"
 
 #- name: Remove secret
 #  file:
