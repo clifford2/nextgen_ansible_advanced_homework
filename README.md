@@ -1,8 +1,17 @@
 # Advanced Deployment with Red Hat Ansible Automation - Final Lab
 
+## Status
+
+This code was written for an assignment in 2021, likely for Ansible ~v2.9 and Python 2.7.
+It is kept here only for historical reference / example purposes.
+
+This code no longer represent current Ansible best practices, and uses outdated Ansible modules.
+In particular, the old Ansible Tower modules (which were moved to the `awx.awx` collection) are no longer maintained, and don't work with current versions of the Ansible Automation Platform.
+For configuring current versions of Ansible Automation Platform, use the [`infra.aap_configuration`](https://galaxy.ansible.com/ui/repo/published/infra/aap_configuration/) collection instead.
+
 ## About
 
-This assignment involves deploying the following with [Ansible](https://ansible.com/):
+This Red Hat training assignment involves deploying the following with [Ansible](https://ansible.com/):
 
 - A 3 tier application (Database, 2 App servers, Load balancer)
 - Provisioning QA infrastructure for the app in OpenStack
@@ -25,7 +34,7 @@ To deploy this, please follow these steps.
 - Fork this git repo: `git clone https://github.com/clifford2/nextgen_ansible_advanced_homework.git && cd nextgen_ansible_advanced_homework`
 - Copy the `labrc` file from the cloned repo to your home directory, and edit it to fill in the required *sensitive* information
 - Set the environment variables from this file: `source ~/labrc`
-- Provision the OSP network, flavor, security groups, and SSH keys, and set up the OSP `workstation` host as an Tower isolated node, by running the following (supplying the OSP workstation SSH password from email when prompted, and the vault password `ansible`):
+- Provision the OSP (OpenStack) network, flavor, security groups, and SSH keys, and set up the OSP `workstation` host as an Tower isolated node, by running the following (supplying the OSP workstation SSH password from email when prompted, and the vault password `ansible`):
 	```
 	mv ~/ansible-tower-setup-*/ ~/ansible-tower-setup-latest
 	cp /etc/ansible/hosts ~/ansible-tower-setup-latest/inventory
@@ -60,7 +69,7 @@ When prompted, please provide the SSH password for the AWS bastion host (from th
 | `aws_provision.yml` | Provision AWS environment | `aws-provision` | Use `order_svc.sh` script to provision env |
 | `aws_creds.yml` | Create machine credential to connect to AWS instances | `aws-creds` | Fetch GUIDkey.pem from bastion of Three tier application env and create machine credential to connect to AWS instances |
 | `aws_status_check.yml` | Check aws instances are up or not | `aws-status` | Try and connect using SSH to test if instances are up |
-| `site-3tier-app.yml` | Deploy three tier app | 1. `osp-facts` | Genrate in-memory inventory for OSP instances |
+| `site-3tier-app.yml` | Deploy three tier app | 1. `osp-facts` | Generate in-memory inventory for OSP instances |
 | | | 2. `base-config` | Initial, common, system setup steps for all servers |
 | | | 3. `lb-tier` | Install & configure haproxy load balancer |
 | | | 4. `app-tier` | Install & configure Apache Tomcat application server |
